@@ -1,4 +1,4 @@
-package com.mcshr.weather.forecast
+package com.mcshr.weather.forecast.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

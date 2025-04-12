@@ -1,11 +1,13 @@
-package com.mcshr.weather.forecast
+package com.mcshr.weather.forecast.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.mcshr.weather.forecast.R
 import com.mcshr.weather.forecast.databinding.FragmentHomeBinding
+import com.mcshr.weather.forecast.ui.select_city.SelectCityFragment
 
 class HomeFragment : Fragment() {
 
