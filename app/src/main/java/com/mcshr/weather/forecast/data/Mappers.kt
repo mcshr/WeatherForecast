@@ -7,6 +7,8 @@ object Mappers {
     fun CityDto.toDomain(): City {
         return City(
             name = name,
+            lat =lat,
+            lon = lon,
             country = country
         )
     }

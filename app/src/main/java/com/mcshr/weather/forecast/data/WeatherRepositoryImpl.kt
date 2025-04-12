@@ -1,28 +1,35 @@
 package com.mcshr.weather.forecast.data
 
+import com.google.gson.Gson
 import com.mcshr.weather.forecast.data.Mappers.toDomain
 import com.mcshr.weather.forecast.data.network.ApiFactory
 import com.mcshr.weather.forecast.domain.WeatherRepository
 import com.mcshr.weather.forecast.domain.entities.City
 
-class WeatherRepositoryImpl(private val sharedPreferences: WeatherSharedPreferences) :
-    WeatherRepository {
-
+class WeatherRepositoryImpl(
+    private val sharedPreferences: WeatherSharedPreferences
+) : WeatherRepository {
+    private val gson = Gson()
     override suspend fun getCityByName(cityName: String): City {
         return ApiFactory.weatherApi.getCityByName(
-            cityName = cityName, APIkey = API_KEY
+            cityName = cityName
         ).first().toDomain()
     }
 
-    override fun saveSelectedCityName(cityName: String) {
-        sharedPreferences.saveSelectedCity(cityName)
+    override fun saveSelectedCity(city: City) {
+        val cityJson = gson.toJson(city)
+        sharedPreferences.saveSelectedCity(cityJson)
     }
 
-    override fun getSelectedCityName(): String? {
-        return sharedPreferences.getSelectedCity()
+    override fun getSelectedCity(): City? {
+        val cityJson = sharedPreferences.getSelectedCity()
+        return cityJson?.let{
+            try {
+                gson.fromJson(it, City::class.java)
+            } catch (e:Exception){
+                null
+            }
+        }
     }
 
-    companion object {
-        private const val API_KEY = "962c846fda8a2a0dce8dd731f39dcb29"
-    }
 }

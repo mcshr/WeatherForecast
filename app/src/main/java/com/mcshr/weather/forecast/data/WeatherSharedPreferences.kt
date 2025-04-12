@@ -5,8 +5,8 @@ import android.content.Context
 class WeatherSharedPreferences(context: Context) {
     private val sharedPrefs = context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
 
-    fun saveSelectedCity(cityName:String){
-        sharedPrefs.edit().putString(KEY_SELECTED_CITY, cityName).apply()
+    fun saveSelectedCity(city:String){
+        sharedPrefs.edit().putString(KEY_SELECTED_CITY, city).apply()
     }
 
     fun getSelectedCity():String?{

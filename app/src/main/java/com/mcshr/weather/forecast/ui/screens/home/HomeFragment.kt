@@ -8,10 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.mcshr.weather.forecast.R
 import com.mcshr.weather.forecast.databinding.FragmentHomeBinding
-import com.mcshr.weather.forecast.ui.screens.WeatherTodayFragment
-import com.mcshr.weather.forecast.ui.screens.WeatherTwoWeeksFragment
-import com.mcshr.weather.forecast.ui.screens.WeatherWeekFragment
 import com.mcshr.weather.forecast.ui.screens.select_city.SelectCityFragment
+import com.mcshr.weather.forecast.ui.screens.weather_2weeks.WeatherTwoWeeksFragment
+import com.mcshr.weather.forecast.ui.screens.weather_today.WeatherTodayFragment
+import com.mcshr.weather.forecast.ui.screens.weather_week.WeatherWeekFragment
+import com.mcshr.weather.forecast.ui.utils.setOnClickListenerWithDelay
 import com.mcshr.weather.forecast.ui.utils.showMessage
 
 class HomeFragment : Fragment() {
@@ -34,33 +35,32 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnSelectCity.setOnClickListener {
+        binding.btnSelectCity.setOnClickListenerWithDelay {
             navigateTo(SelectCityFragment.newInstance())
         }
-        binding.btnWeatherToday.setOnClickListener {
-            if(viewModel.isCityExist()) {
+        binding.btnWeatherToday.setOnClickListenerWithDelay {
+            handleNavigation{
                 navigateTo(WeatherTodayFragment.newInstance())
-            }else {
-                context?.showMessage("First, select a city")
             }
         }
-        binding.btnWeatherWeek.setOnClickListener {
-            if(viewModel.isCityExist()) {
+        binding.btnWeatherWeek.setOnClickListenerWithDelay {
+            handleNavigation{
                 navigateTo(WeatherWeekFragment.newInstance())
-            }else {
-                context?.showMessage("First, select a city")
             }
         }
-        binding.btnWeather2Weeks.setOnClickListener {
-            if(viewModel.isCityExist()) {
+        binding.btnWeather2Weeks.setOnClickListenerWithDelay {
+            handleNavigation{
                 navigateTo(WeatherTwoWeeksFragment.newInstance())
-            }else {
-                context?.showMessage("First, select a city")
             }
-
         }
     }
-    private fun handleNavigation(){}
+    private fun handleNavigation(destination: ()->Unit){
+        if(viewModel.isCityExist()){
+            destination()
+        }else{
+            context?.showMessage(getString(R.string.error_no_city))
+        }
+    }
 
 
 

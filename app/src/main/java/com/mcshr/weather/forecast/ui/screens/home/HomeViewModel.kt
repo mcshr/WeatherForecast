@@ -9,6 +9,6 @@ class HomeViewModel(application: Application):AndroidViewModel(application) {
     private val repository = WeatherRepositoryImpl(WeatherSharedPreferences(application))
 
     fun isCityExist():Boolean{
-        return !repository.getSelectedCityName().isNullOrBlank()
+        return repository.getSelectedCity() != null
     }
 }

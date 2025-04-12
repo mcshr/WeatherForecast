@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.mcshr.weather.forecast.R
 import com.mcshr.weather.forecast.databinding.FragmentSelectCityBinding
 import com.mcshr.weather.forecast.ui.utils.setOnClickListenerWithDelay
+import com.mcshr.weather.forecast.ui.utils.showMessage
 
 class SelectCityFragment : Fragment() {
 
@@ -33,12 +34,12 @@ class SelectCityFragment : Fragment() {
             if (cityName.isNotEmpty()) {
                 viewModel.selectCity(cityName)
             } else {
-                showMessage("Enter city name")
+                context?.showMessage(getString(R.string.error_empty_et_city))
             }
         }
 
         viewModel.validationMessage.observe(viewLifecycleOwner){
-            showMessage(it)
+            context?.showMessage(it)
         }
         viewModel.readyToClose.observe(viewLifecycleOwner){
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -47,9 +48,7 @@ class SelectCityFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun showMessage(message:String){
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
+
 
     companion object {
         fun newInstance() = SelectCityFragment()

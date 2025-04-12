@@ -8,5 +8,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="select_city">Select city</string>
     <string name="select">Select</string>
+    <string name="error_no_city">First, select a city</string>
+    <string name="error_empty_et_city">Enter city name</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_timeout">Waiting time expired. Try again later.</string>
+    <string name="error_invalid_city_name">City not found</string>
+    <string name="selected_city">Selected city: %1$s - %2$s</string>
+    <string name="error_429">Request limit exceeded</string>
+    <string name="error_unknown">Unknown exception: %1$s</string>
+    <string name="error_server">Server error: %1$s</string>
 
 </resources>
