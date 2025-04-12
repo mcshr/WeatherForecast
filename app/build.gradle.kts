@@ -49,5 +49,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
 }
