@@ -1,4 +1,4 @@
-package com.mcshr.weather.forecast.ui
+package com.mcshr.weather.forecast.ui.screens
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

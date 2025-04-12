@@ -1,4 +1,4 @@
-package com.mcshr.weather.forecast.ui.select_city
+package com.mcshr.weather.forecast.ui.screens.select_city
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.mcshr.weather.forecast.databinding.FragmentSelectCityBinding
+import com.mcshr.weather.forecast.ui.utils.setOnClickListenerWithDelay
 
 class SelectCityFragment : Fragment() {
 
@@ -15,7 +16,7 @@ class SelectCityFragment : Fragment() {
     private val binding
         get() = _binding ?: throw RuntimeException("Fragment SelectCit binding is null")
 
-    private val viewModel:SelectCityViewModel by viewModels()
+    private val viewModel: SelectCityViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -27,7 +28,7 @@ class SelectCityFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.button.setOnClickListener {
+        binding.button.setOnClickListenerWithDelay {
             val cityName = binding.editTextSelectCity.text.toString().trim()
             if (cityName.isNotEmpty()) {
                 viewModel.selectCity(cityName)
@@ -38,6 +39,9 @@ class SelectCityFragment : Fragment() {
 
         viewModel.validationMessage.observe(viewLifecycleOwner){
             showMessage(it)
+        }
+        viewModel.readyToClose.observe(viewLifecycleOwner){
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         super.onViewCreated(view, savedInstanceState)

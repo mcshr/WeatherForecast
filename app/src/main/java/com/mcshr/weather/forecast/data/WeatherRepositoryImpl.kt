@@ -5,13 +5,21 @@ import com.mcshr.weather.forecast.data.network.ApiFactory
 import com.mcshr.weather.forecast.domain.WeatherRepository
 import com.mcshr.weather.forecast.domain.entities.City
 
-class WeatherRepositoryImpl : WeatherRepository {
-
+class WeatherRepositoryImpl(private val sharedPreferences: WeatherSharedPreferences) :
+    WeatherRepository {
 
     override suspend fun getCityByName(cityName: String): City {
         return ApiFactory.weatherApi.getCityByName(
             cityName = cityName, APIkey = API_KEY
         ).first().toDomain()
+    }
+
+    override fun saveSelectedCityName(cityName: String) {
+        sharedPreferences.saveSelectedCity(cityName)
+    }
+
+    override fun getSelectedCityName(): String? {
+        return sharedPreferences.getSelectedCity()
     }
 
     companion object {
