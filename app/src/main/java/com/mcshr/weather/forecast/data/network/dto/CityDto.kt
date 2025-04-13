@@ -1,4 +1,4 @@
-package com.mcshr.weather.forecast.data.network
+package com.mcshr.weather.forecast.data.network.dto
 
 data class CityDto(
     val name: String,

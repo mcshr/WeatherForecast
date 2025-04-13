@@ -6,16 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.screens.select_city.SelectCityFragment">
 
-    <TextView
-        android:id="@+id/textView1"
-        style="@style/text.title"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/select_city"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_back_24"
+        style="@style/appToolbar.Centered"
+        app:title="@string/select_city"
+        />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <EditText
         android:id="@+id/editText_select_city"
@@ -23,11 +30,11 @@
         android:layout_height="wrap_content"
         android:minHeight="48dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
+
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout1"
         tools:text="Kyiv"
         android:inputType="text"
         />
