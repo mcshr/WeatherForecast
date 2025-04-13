@@ -6,9 +6,9 @@ data class WeatherCurrentDto(
     val visibility: Int,
     val wind: WindDto,
     val rain: RainDto?,
-    val clouds: CloudsDto?,
+    val clouds: CloudsDto,
     val dt: Long,
     val sys: SysDto,
-    val timezone: Int?,
-    val name: String,
+    val timezone: Long,
+    val name: String
     )

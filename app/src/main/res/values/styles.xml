@@ -11,14 +11,13 @@
         <item name="fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="text.body">
-        <item name="android:textColor">@color/text60</item>
-        <item name="android:textSize">14sp</item>
-    </style>
 
     <style name="text.appbar">
         <item name="android:textSize">22sp</item>
         <item name="fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="text.bigNumber">
+        <item name="android:textSize">86sp</item>
     </style>
 
     <style name="HomeFragmentLargeButton" parent="Widget.Material3.Button">

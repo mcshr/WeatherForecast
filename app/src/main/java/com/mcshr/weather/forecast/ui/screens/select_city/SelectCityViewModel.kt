@@ -10,10 +10,8 @@ import com.mcshr.weather.forecast.R
 import com.mcshr.weather.forecast.data.WeatherRepositoryImpl
 import com.mcshr.weather.forecast.data.WeatherSharedPreferences
 import com.mcshr.weather.forecast.domain.WeatherRepository
+import com.mcshr.weather.forecast.ui.utils.handleNetworkException
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 
 class SelectCityViewModel(private val application: Application) : AndroidViewModel(application) {
     private val repository: WeatherRepository = WeatherRepositoryImpl(
@@ -41,24 +39,21 @@ class SelectCityViewModel(private val application: Application) : AndroidViewMod
                     ))
                 repository.saveSelectedCity(city)
                 _readyToClose.postValue(Unit)
-            } catch (e: UnknownHostException) {
-                _validationMessage.postValue(application.getString(R.string.error_no_internet))
-            } catch (e: SocketTimeoutException){
-                _validationMessage.postValue(application.getString(R.string.error_timeout))
-            } catch (e: NoSuchElementException) {
-                _validationMessage.postValue(application.getString(R.string.error_invalid_city_name))
-            }
-            catch (e: HttpException) {
-                val message = when (e.code()) {
-                    429 -> application.getString(R.string.error_429)
-                    else -> application.getString(R.string.error_server, e.code().toString())
-                }
-                _validationMessage.postValue(message)
             }
             catch (e: Exception) {
-                _validationMessage.postValue(application.getString(R.string.error_unknown, e))
-                Log.d("error", e.toString())
+                e.handleNetworkException(application)?.let {
+                    _validationMessage.postValue(it)
+                } ?: run {
+                    when(e){
+                        is NoSuchElementException ->  _validationMessage.postValue(application.getString(R.string.error_invalid_city_name))
+                        else ->{
+                            _validationMessage.postValue(application.getString(R.string.error_unknown, e))
+                            Log.d("error", e.toString())
+                        }
+                    }
+                }
             }
         }
     }
+
 }

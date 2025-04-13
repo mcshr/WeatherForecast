@@ -14,5 +14,12 @@
     <string name="error_429">Request limit exceeded</string>
     <string name="error_unknown">Unknown exception: %1$s</string>
     <string name="error_server">Server error: %1$s</string>
+    <string name="temperature">%1$s°</string>
+    <string name="feels_like">Feels like %1$s°</string>
+    <string name="rain">Rain: %1$s</string>
+    <string name="humidity">Humidity: %1$s%%</string>
+    <string name="pressure">Pressure: %1$s hPa</string>
+    <string name="wind">Wind speed: %1$s m/s\nWind direction: %2$s°</string>
+    <string name="clouds">Clouds: %1$s%%</string>
 
 </resources>

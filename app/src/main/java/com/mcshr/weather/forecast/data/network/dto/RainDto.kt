@@ -4,4 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class RainDto(
     @SerializedName("1h") val oneHour: Double,
+    @SerializedName("3h") val threeHours: Double
 )
