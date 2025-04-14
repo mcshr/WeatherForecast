@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.View
 import android.widget.Toast
 import com.mcshr.weather.forecast.R
+import com.mcshr.weather.forecast.domain.entities.WeatherForecastDay
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -43,6 +44,22 @@ fun Exception.handleNetworkException(application: Application): String? {
 
         else -> null
     }
+}
+
+fun List<WeatherForecastDay>.duplicateTo2Weeks():List<WeatherForecastDay>{
+    val result = mutableListOf<WeatherForecastDay>()
+    var dayOffset = 0L
+
+    while (result.size < 14) {
+        for (day in this) {
+            if (result.size == 14) break
+            val shiftedDate = day.day.plusDays(dayOffset)
+            result += day.copy(day = shiftedDate)
+        }
+        dayOffset += size
+    }
+
+    return result
 }
 
 

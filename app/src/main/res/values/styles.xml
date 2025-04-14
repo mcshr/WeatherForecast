@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="text">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="fontFamily">sans-serif</item>
         <item name="android:textColor">@color/text87</item>
     </style>
@@ -10,12 +10,11 @@
         <item name="android:textSize">24sp</item>
         <item name="fontFamily">sans-serif-medium</item>
     </style>
-
-
-    <style name="text.appbar">
-        <item name="android:textSize">22sp</item>
-        <item name="fontFamily">sans-serif-medium</item>
+    <style name="text.title.small">
+        <item name="android:textSize">18sp</item>
     </style>
+
+
     <style name="text.bigNumber">
         <item name="android:textSize">86sp</item>
     </style>

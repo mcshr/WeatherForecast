@@ -1,4 +1,4 @@
-package com.mcshr.weather.forecast.ui.screens.weather_today
+package com.mcshr.weather.forecast.ui.screens.weather_2weeks
 
 import android.app.Application
 import android.util.Log
@@ -10,11 +10,12 @@ import com.mcshr.weather.forecast.R
 import com.mcshr.weather.forecast.data.WeatherRepositoryImpl
 import com.mcshr.weather.forecast.data.WeatherSharedPreferences
 import com.mcshr.weather.forecast.domain.WeatherRepository
-import com.mcshr.weather.forecast.domain.entities.WeatherForecastItem
+import com.mcshr.weather.forecast.domain.entities.WeatherForecastDay
+import com.mcshr.weather.forecast.ui.utils.duplicateTo2Weeks
 import com.mcshr.weather.forecast.ui.utils.handleNetworkException
 import kotlinx.coroutines.launch
 
-class WeatherTodayViewModel(private val application: Application) : AndroidViewModel(application) {
+class WeatherTwoWeeksViewModel(private val application: Application) : AndroidViewModel(application) {
     private val repository: WeatherRepository = WeatherRepositoryImpl(
         WeatherSharedPreferences(context = application)
     )
@@ -25,19 +26,18 @@ class WeatherTodayViewModel(private val application: Application) : AndroidViewM
     val validationMessage: LiveData<String>
         get() = _validationMessage
 
-    private val _weatherForecastItem = MutableLiveData<WeatherForecastItem>()
-    val weatherForecastItem: LiveData<WeatherForecastItem>
-        get() = _weatherForecastItem
-
+    private val _weatherWeek = MutableLiveData<List<WeatherForecastDay>>()
+    val weatherWeek: LiveData<List<WeatherForecastDay>>
+        get() = _weatherWeek
 
     init {
         viewModelScope.launch {
             try {
                 val weather = selectedCity?.let {
-                    repository.getWeatherToday(it)
+                    repository.getWeatherWeek(it)
                 }
                 weather?.let {
-                    _weatherForecastItem.postValue(it)
+                    _weatherWeek.postValue(it.duplicateTo2Weeks())
                 }
             } catch (e: Exception) {
                 e.handleNetworkException(application)?.let {
@@ -50,4 +50,3 @@ class WeatherTodayViewModel(private val application: Application) : AndroidViewM
         }
     }
 }
-

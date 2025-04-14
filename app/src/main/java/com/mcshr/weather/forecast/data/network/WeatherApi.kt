@@ -2,7 +2,8 @@ package com.mcshr.weather.forecast.data.network
 
 import com.mcshr.weather.forecast.BuildConfig
 import com.mcshr.weather.forecast.data.network.dto.CityDto
-import com.mcshr.weather.forecast.data.network.dto.WeatherCurrentDto
+import com.mcshr.weather.forecast.data.network.dto.WeatherForecast5daysDto
+import com.mcshr.weather.forecast.data.network.dto.WeatherForecastDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -21,12 +22,15 @@ interface WeatherApi {
         @Query("lon") lon:Double,
         @Query("appid") apiKey:String = BuildConfig.API_KEY,
         @Query("units") units:String = TEMPERATURE_IN_CELSIUS
-    ):WeatherCurrentDto
+    ):WeatherForecastDto
 
-
-
-    @GET("img/wn/10d@2x.png")
-    suspend fun getIconByCode()
+    @GET("data/2.5/forecast")
+    suspend fun getWeather5Days(
+        @Query("lat") lat:Double,
+        @Query("lon") lon:Double,
+        @Query("appid") apiKey:String = BuildConfig.API_KEY,
+        @Query("units") units:String = TEMPERATURE_IN_CELSIUS
+    ):WeatherForecast5daysDto
 
 
     companion object{

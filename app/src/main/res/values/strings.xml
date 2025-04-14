@@ -21,5 +21,7 @@
     <string name="pressure">Pressure: %1$s hPa</string>
     <string name="wind">Wind speed: %1$s m/s\nWind direction: %2$s°</string>
     <string name="clouds">Clouds: %1$s%%</string>
+    <string name="wind_short">%1$.1f m/s</string>
+    <string name="num_with_percent">%1$s%%</string>
 
 </resources>

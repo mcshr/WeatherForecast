@@ -1,4 +1,4 @@
-package com.mcshr.weather.forecast.ui.utils
+package com.mcshr.weather.forecast.data.network
 import android.os.Build
 
 /**

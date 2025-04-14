@@ -10,6 +10,8 @@ import coil.load
 import com.mcshr.weather.forecast.R
 import com.mcshr.weather.forecast.databinding.FragmentWeatherTodayBinding
 import com.mcshr.weather.forecast.ui.utils.showMessage
+import org.threeten.bp.format.DateTimeFormatter
+import java.util.Locale
 
 
 class WeatherTodayFragment : Fragment() {
@@ -37,11 +39,14 @@ class WeatherTodayFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-
         viewModel.validationMessage.observe(viewLifecycleOwner){
             context?.showMessage(it)
         }
-        viewModel.weatherToday.observe(viewLifecycleOwner){
+
+        viewModel.weatherForecastItem.observe(viewLifecycleOwner){
+            val formatter = DateTimeFormatter.ofPattern("HH:mm, dd MMMM yyyy", Locale.ENGLISH)
+            val date = it.timeOfDataCalculation.format(formatter)
+           binding.tvDate.text = date
             binding.tvTemp.text = getString(R.string.temperature, it.mainData.temp.toInt().toString())
             binding.tvTempRealFeel.text = getString(R.string.feels_like, it.mainData.feelsLike.toString())
 //            Log.d("ICON", it.weather.first().iconUrl)
@@ -63,6 +68,10 @@ class WeatherTodayFragment : Fragment() {
         }
         
         super.onViewCreated(view, savedInstanceState)
+    }
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
 

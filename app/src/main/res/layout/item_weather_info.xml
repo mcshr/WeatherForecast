@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tvTime"
+        style="@style/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="12:00" />
+
+    <ImageView
+        android:id="@+id/imageView_weather"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp" />
+
+    <TextView
+        android:id="@+id/tvTemp"
+        style="@style/text"
+        android:layout_width="wrap_content"
+        android:minWidth="35dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        tools:text="-772°" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:src="@drawable/ic_wind_24" />
+
+    <TextView
+        android:id="@+id/tv_wind"
+        style="@style/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="65dp"
+        android:singleLine="true"
+        tools:text="3333 m/s" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:src="@drawable/ic_humidity_24" />
+
+    <TextView
+        android:id="@+id/tv_humidity"
+        style="@style/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        tools:text="100%" />
+
+</LinearLayout>
+

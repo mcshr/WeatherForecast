@@ -4,7 +4,8 @@ import com.google.gson.Gson
 import com.mcshr.weather.forecast.data.network.ApiFactory
 import com.mcshr.weather.forecast.domain.WeatherRepository
 import com.mcshr.weather.forecast.domain.entities.City
-import com.mcshr.weather.forecast.domain.entities.WeatherToday
+import com.mcshr.weather.forecast.domain.entities.WeatherForecastDay
+import com.mcshr.weather.forecast.domain.entities.WeatherForecastItem
 
 class WeatherRepositoryImpl(
     private val sharedPreferences: WeatherSharedPreferences
@@ -16,8 +17,15 @@ class WeatherRepositoryImpl(
         ).first().toDomain()
     }
 
-    override suspend fun getWeatherToday(city: City): WeatherToday {
+    override suspend fun getWeatherToday(city: City): WeatherForecastItem {
         return ApiFactory.weatherApi.getWeatherToday(
+            lat = city.lat,
+            lon = city.lon
+        ).toDomain()
+    }
+
+    override suspend fun getWeatherWeek(city: City): List<WeatherForecastDay> {
+        return ApiFactory.weatherApi.getWeather5Days(
             lat = city.lat,
             lon = city.lon
         ).toDomain()
@@ -30,10 +38,10 @@ class WeatherRepositoryImpl(
 
     override fun getSelectedCity(): City? {
         val cityJson = sharedPreferences.getSelectedCity()
-        return cityJson?.let{
+        return cityJson?.let {
             try {
                 gson.fromJson(it, City::class.java)
-            } catch (e:Exception){
+            } catch (e: Exception) {
                 null
             }
         }

@@ -61,5 +61,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-    implementation("io.coil-kt:coil:2.4.0")
+    implementation(libs.coil)
+    implementation(libs.threetenabp)
 }

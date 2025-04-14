@@ -28,6 +28,7 @@ class SelectCityFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.button.setOnClickListenerWithDelay {
             val cityName = binding.editTextSelectCity.text.toString().trim()
@@ -36,6 +37,9 @@ class SelectCityFragment : Fragment() {
             } else {
                 context?.showMessage(getString(R.string.error_empty_et_city))
             }
+        }
+        binding.toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         viewModel.validationMessage.observe(viewLifecycleOwner){
@@ -46,6 +50,10 @@ class SelectCityFragment : Fragment() {
         }
 
         super.onViewCreated(view, savedInstanceState)
+    }
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
 
