@@ -24,8 +24,19 @@ android {
         propertiesFileName = "secrets.properties"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("../appInnovation_keystore.jks")
+            storePassword = project.property("KEYSTORE_PASSWORD") as String
+            keyAlias = "appInnovation_key"
+            keyPassword = project.property("KEY_PASSWORD") as String
+        }
+    }
+
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
