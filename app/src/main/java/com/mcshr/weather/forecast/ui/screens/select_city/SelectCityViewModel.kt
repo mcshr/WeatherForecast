@@ -1,23 +1,26 @@
 package com.mcshr.weather.forecast.ui.screens.select_city
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcshr.weather.forecast.R
-import com.mcshr.weather.forecast.data.WeatherRepositoryImpl
-import com.mcshr.weather.forecast.data.WeatherSharedPreferences
-import com.mcshr.weather.forecast.domain.WeatherRepository
+import com.mcshr.weather.forecast.domain.interactors.GetCityByNameUseCase
+import com.mcshr.weather.forecast.domain.interactors.SaveSelectedCityUseCase
 import com.mcshr.weather.forecast.ui.utils.handleNetworkException
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SelectCityViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val repository: WeatherRepository = WeatherRepositoryImpl(
-        WeatherSharedPreferences(context = application)
-    )
-
+@HiltViewModel
+class SelectCityViewModel @Inject constructor(
+    private val saveSelectedCity: SaveSelectedCityUseCase,
+    private val getCityByName: GetCityByNameUseCase,
+    @ApplicationContext private val context: Context
+) : ViewModel() {
     private val _validationMessage = MutableLiveData<String>()
     val validationMessage: LiveData<String>
         get() = _validationMessage
@@ -30,24 +33,32 @@ class SelectCityViewModel(private val application: Application) : AndroidViewMod
     fun selectCity(cityName: String) {
         viewModelScope.launch {
             try {  //TODO make sealed class for result (success and error)
-                val city = repository.getCityByName(cityName)
+                val city = getCityByName(cityName)
                 _validationMessage.postValue(
-                    application.getString(
+                    context.getString(
                         R.string.selected_city,
                         city.name,
                         city.country
-                    ))
-                repository.saveSelectedCity(city)
+                    )
+                )
+                saveSelectedCity(city)
                 _readyToClose.postValue(Unit)
-            }
-            catch (e: Exception) {
-                e.handleNetworkException(application)?.let {
+            } catch (e: Exception) {
+                e.handleNetworkException(context)?.let {
                     _validationMessage.postValue(it)
                 } ?: run {
-                    when(e){
-                        is NoSuchElementException ->  _validationMessage.postValue(application.getString(R.string.error_invalid_city_name))
-                        else ->{
-                            _validationMessage.postValue(application.getString(R.string.error_unknown, e))
+                    when (e) {
+                        is NoSuchElementException -> _validationMessage.postValue(
+                            context.getString(R.string.error_invalid_city_name)
+                        )
+
+                        else -> {
+                            _validationMessage.postValue(
+                                context.getString(
+                                    R.string.error_unknown,
+                                    e
+                                )
+                            )
                             Log.d("error", e.toString())
                         }
                     }

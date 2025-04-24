@@ -10,7 +10,9 @@ import com.mcshr.weather.forecast.R
 import com.mcshr.weather.forecast.databinding.FragmentSelectCityBinding
 import com.mcshr.weather.forecast.ui.utils.setOnClickListenerWithDelay
 import com.mcshr.weather.forecast.ui.utils.showMessage
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SelectCityFragment : Fragment() {
 
     private var _binding: FragmentSelectCityBinding? = null

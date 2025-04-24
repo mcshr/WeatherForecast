@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -74,4 +76,7 @@ dependencies {
 
     implementation(libs.coil)
     implementation(libs.threetenabp)
+
+    implementation("com.google.dagger:hilt-android:2.56.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.56.1")
 }

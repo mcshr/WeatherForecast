@@ -1,6 +1,5 @@
 package com.mcshr.weather.forecast.ui.utils
 
-import android.app.Application
 import android.content.Context
 import android.view.View
 import android.widget.Toast
@@ -28,16 +27,16 @@ fun View.setOnClickListenerWithDelay(onClick: (View) -> Unit){
 }
 
 
-fun Exception.handleNetworkException(application: Application): String? {
+fun Exception.handleNetworkException (context: Context): String? {
     return when (this) {
-        is UnknownHostException -> application.getString(R.string.error_no_internet)
+        is UnknownHostException -> context.getString(R.string.error_no_internet)
 
-        is SocketTimeoutException -> application.getString(R.string.error_timeout)
+        is SocketTimeoutException -> context.getString(R.string.error_timeout)
 
         is HttpException -> {
             val message = when (this.code()) {
-                429 -> application.getString(R.string.error_429)
-                else -> application.getString(R.string.error_server, this.code().toString())
+                429 -> context.getString(R.string.error_429)
+                else -> context.getString(R.string.error_server, this.code().toString())
             }
             message
         }

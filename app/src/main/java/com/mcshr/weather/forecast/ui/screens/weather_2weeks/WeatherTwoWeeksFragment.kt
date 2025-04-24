@@ -9,8 +9,9 @@ import androidx.fragment.app.viewModels
 import com.mcshr.weather.forecast.databinding.FragmentWeatherTwoWeeksBinding
 import com.mcshr.weather.forecast.ui.utils.showMessage
 import com.mcshr.weather.forecast.ui.weather_adapters.weather_day.WeatherDayListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class WeatherTwoWeeksFragment : Fragment() {
 
     private var _binding: FragmentWeatherTwoWeeksBinding? = null

@@ -1,25 +1,29 @@
 package com.mcshr.weather.forecast.ui.screens.weather_week
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcshr.weather.forecast.R
-import com.mcshr.weather.forecast.data.WeatherRepositoryImpl
-import com.mcshr.weather.forecast.data.WeatherSharedPreferences
-import com.mcshr.weather.forecast.domain.WeatherRepository
 import com.mcshr.weather.forecast.domain.entities.WeatherForecastDay
+import com.mcshr.weather.forecast.domain.interactors.GetSelectedCityUseCase
+import com.mcshr.weather.forecast.domain.interactors.GetWeatherWeekUseCase
 import com.mcshr.weather.forecast.ui.utils.handleNetworkException
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class WeatherWeekViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val repository: WeatherRepository = WeatherRepositoryImpl(
-        WeatherSharedPreferences(context = application)
-    )
-
-    val selectedCity = repository.getSelectedCity()
+@HiltViewModel
+class WeatherWeekViewModel
+    @Inject constructor(
+    getSelectedCity: GetSelectedCityUseCase,
+    private val getWeatherWeek: GetWeatherWeekUseCase,
+    @ApplicationContext private val context: Context
+) : ViewModel() {
+    val selectedCity = getSelectedCity()
 
     private val _validationMessage = MutableLiveData<String>()
     val validationMessage: LiveData<String>
@@ -33,16 +37,16 @@ class WeatherWeekViewModel(private val application: Application) : AndroidViewMo
         viewModelScope.launch {
             try {
                 val weather = selectedCity?.let {
-                    repository.getWeatherWeek(it)
+                   getWeatherWeek(it)
                 }
                 weather?.let {
                     _weatherWeek.postValue(it)
                 }
             } catch (e: Exception) {
-                e.handleNetworkException(application)?.let {
+                e.handleNetworkException(context)?.let {
                     _validationMessage.postValue(it)
                 } ?: run {
-                    _validationMessage.postValue(application.getString(R.string.error_unknown, e))
+                    _validationMessage.postValue(context.getString(R.string.error_unknown, e))
                     Log.d("error", e.toString())
                 }
             }

@@ -1,14 +1,15 @@
 package com.mcshr.weather.forecast.ui.screens.home
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.mcshr.weather.forecast.data.WeatherRepositoryImpl
-import com.mcshr.weather.forecast.data.WeatherSharedPreferences
+import androidx.lifecycle.ViewModel
+import com.mcshr.weather.forecast.domain.interactors.GetSelectedCityUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel(application: Application):AndroidViewModel(application) {
-    private val repository = WeatherRepositoryImpl(WeatherSharedPreferences(application))
-
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getSelectedCity: GetSelectedCityUseCase
+): ViewModel() {
     fun isCityExist():Boolean{
-        return repository.getSelectedCity() != null
+        return getSelectedCity() != null
     }
 }

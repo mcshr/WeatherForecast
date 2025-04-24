@@ -10,10 +10,11 @@ import coil.load
 import com.mcshr.weather.forecast.R
 import com.mcshr.weather.forecast.databinding.FragmentWeatherTodayBinding
 import com.mcshr.weather.forecast.ui.utils.showMessage
+import dagger.hilt.android.AndroidEntryPoint
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.Locale
 
-
+@AndroidEntryPoint
 class WeatherTodayFragment : Fragment() {
 
     private var _binding: FragmentWeatherTodayBinding? = null

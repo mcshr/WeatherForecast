@@ -14,7 +14,9 @@ import com.mcshr.weather.forecast.ui.screens.weather_today.WeatherTodayFragment
 import com.mcshr.weather.forecast.ui.screens.weather_week.WeatherWeekFragment
 import com.mcshr.weather.forecast.ui.utils.setOnClickListenerWithDelay
 import com.mcshr.weather.forecast.ui.utils.showMessage
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
